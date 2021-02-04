@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_home">
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="net.sipconsult.sipposorder.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/home_fragment" />
+    <fragment
+        android:id="@+id/nav_orders"
+        android:name="net.sipconsult.sipposorder.ui.orders.OrderFragment"
+        android:label="Orders"
+        tools:layout="@layout/order_fragment">
+        <action
+            android:id="@+id/action_nav_orders_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="net.sipconsult.sipposorder.ui.orders.details.OrderDetailFragment"
+        android:label="Order Detail"
+        tools:layout="@layout/order_detail_fragment">
+        <argument
+            android:name="orderId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="net.sipconsult.sipposorder.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+</navigation>
