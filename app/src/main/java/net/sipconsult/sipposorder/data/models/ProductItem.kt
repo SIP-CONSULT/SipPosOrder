@@ -58,7 +58,7 @@ data class ProductItem(
 
     fun fromOrderItem(orderItem: OrderItemItem): ProductItem {
         val pdt = ProductItem(
-            id = orderItem.id,
+            id = orderItem.product.id,
             barcode = orderItem.product.barcode,
             name = orderItem.product.name,
             code = orderItem.product.code,

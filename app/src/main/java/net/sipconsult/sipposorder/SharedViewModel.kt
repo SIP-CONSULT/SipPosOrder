@@ -14,12 +14,11 @@ import net.sipconsult.sipposorder.data.repository.order.OrderRepository
 import net.sipconsult.sipposorder.data.repository.orderCart.OrderCartRepository
 import net.sipconsult.sipposorder.data.repository.user.UserRepository
 import net.sipconsult.sipposorder.internal.Event
+import net.sipconsult.sipposorder.internal.Result
 import net.sipconsult.sipposorder.internal.lazyDeferred
 import net.sipconsult.sipposorder.ui.login.AuthenticationState
-import net.sipconsult.sipposorder.ui.orders.OrdersResult
-import java.text.DecimalFormat
-import net.sipconsult.sipposorder.internal.Result
 import net.sipconsult.sipposorder.ui.orders.TransactionResult
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,6 +48,7 @@ class SharedViewModel(
     private var username: String = ""
     var email: String = ""
 
+    var orderId: Int = 0
 
     private var isOrderNumberGenerated: Boolean = false
     var isPrintReceipt: Boolean = false
@@ -216,6 +216,27 @@ class SharedViewModel(
         )
 
         orderRepository.postOrder(body)
+
+    }
+
+    val postOrderS by lazyDeferred {
+
+        val items = arrayListOf<OrderItemPutBody>()
+
+        for (item in orderCartItems.value!!) {
+            val item = OrderItemPutBody(
+                itemId = item.product.id,
+                quantity = item.quantity
+            )
+            items.add(item)
+        }
+
+        val body = OrderPutBody(
+            id = orderId,
+            orderItems = items
+        )
+
+        orderRepository.postOrderS(orderId, body)
 
     }
 

@@ -16,9 +16,10 @@ class OrderViewHolder(
     fun bind(order: OrderItem, position: Int) {
         orderPosition = position
         _order = order
-        binding.textOrderDate.text = order.date
+        binding.textOrderDate.text = order.getFormatDate()
         binding.textOrderOrderNumber.text = order.orderNumber
         binding.textOrderLocation.text = order.location.name
+        binding.textSaleTransactionTotalSales.text = order.totalSales.toString()
 
     }
 

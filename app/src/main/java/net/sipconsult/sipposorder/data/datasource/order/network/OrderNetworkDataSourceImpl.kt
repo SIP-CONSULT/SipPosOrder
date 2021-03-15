@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import net.sipconsult.sipposorder.data.models.OrderItem
 import net.sipconsult.sipposorder.data.models.OrderPostBody
+import net.sipconsult.sipposorder.data.models.OrderPutBody
 import net.sipconsult.sipposorder.data.network.SipShopApiService
 import net.sipconsult.sipposorder.data.network.response.OrderResponse
 import net.sipconsult.sipposorder.data.network.response.Orders
@@ -20,6 +21,28 @@ class OrderNetworkDataSourceImpl(
     override suspend fun postOrder(body: OrderPostBody): Result<OrderResponse> {
         try {
             val postOrder = sipShopApiService.postOrderAsync(body)
+
+            return if (postOrder.successful) {
+                Result.Success(
+                    postOrder
+                )
+
+            } else {
+                Result.Error(
+                    IOException("Error logging in")
+                )
+            }
+        } catch (e: NoConnectivityException) {
+            Log.d(TAG, "postOrder: No internet Connection ", e)
+            return Result.Error(
+                IOException("Error logging in", e)
+            )
+        }
+    }
+
+    override suspend fun postOrderS(orderId: Int, body: OrderPutBody): Result<OrderResponse> {
+        try {
+            val postOrder = sipShopApiService.postOrderSAsync(orderId, body)
 
             return if (postOrder.successful) {
                 Result.Success(

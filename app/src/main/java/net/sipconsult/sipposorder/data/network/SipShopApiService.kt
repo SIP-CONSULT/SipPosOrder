@@ -46,6 +46,8 @@ interface SipShopApiService {
     @POST("api/Orders")
     suspend fun postOrderAsync(@Body body: OrderPostBody): OrderResponse
 
+    @PUT("api/Orders/{id}")
+    suspend fun postOrderSAsync(@Path("id") id: Int, @Body body: OrderPutBody): OrderResponse
 
     @GET("api/SalesAgent")
     suspend fun getSalesAgentsAsync(): SalesAgents

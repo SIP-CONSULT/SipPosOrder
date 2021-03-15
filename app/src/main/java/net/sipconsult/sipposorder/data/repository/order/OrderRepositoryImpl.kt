@@ -9,6 +9,7 @@ import net.sipconsult.sipposorder.data.datasource.order.local.OrderLocalDataSour
 import net.sipconsult.sipposorder.data.datasource.order.network.OrderNetworkDataSource
 import net.sipconsult.sipposorder.data.models.OrderItem
 import net.sipconsult.sipposorder.data.models.OrderPostBody
+import net.sipconsult.sipposorder.data.models.OrderPutBody
 import net.sipconsult.sipposorder.data.network.response.OrderResponse
 import net.sipconsult.sipposorder.data.network.response.Orders
 import net.sipconsult.sipposorder.internal.Result
@@ -27,6 +28,12 @@ class OrderRepositoryImpl(
     override suspend fun postOrder(body: OrderPostBody): Result<OrderResponse> {
         return withContext(Dispatchers.IO) {
             return@withContext networkDataSource.postOrder(body)
+        }
+    }
+
+    override suspend fun postOrderS(orderId: Int, body: OrderPutBody): Result<OrderResponse> {
+        return withContext(Dispatchers.IO) {
+            return@withContext networkDataSource.postOrderS(orderId, body)
         }
     }
 
